@@ -1,13 +1,12 @@
+// backend/models/Conversation.model.js
 import mongoose from "mongoose";
 
 const conversationSchema = new mongoose.Schema(
   {
-    participants: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
-      },
-    ],
+    participants: {
+      type: [String],
+      required: true,
+    },
     messages: [
       {
         type: mongoose.Schema.Types.ObjectId,
@@ -15,7 +14,9 @@ const conversationSchema = new mongoose.Schema(
       },
     ],
   },
-  { timestamps: true }
+  {
+    timestamps: true,
+  }
 );
 
 const Conversation = mongoose.model("Conversation", conversationSchema);

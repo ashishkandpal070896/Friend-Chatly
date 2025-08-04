@@ -15,7 +15,7 @@ export const sendMessage = async (req, res) => {
     }
 
     let conversation = await Conversation.findOne({
-      partcipants: { $all: [sender, receiver] },
+      participants: { $all: [sender, receiver] },
     });
 
     let newMessage = await Message.create({
@@ -27,7 +27,7 @@ export const sendMessage = async (req, res) => {
 
     if (!conversation) {
       conversation = await Conversation.create({
-        partcipants: [sender, receiver],
+        participants: [sender, receiver],
         messages: [newMessage._id],
       });
     } else {
@@ -51,7 +51,7 @@ export const getMessages = async (req, res) => {
     let sender = req.userId;
     let { receiver } = req.params;
     let conversation = await Conversation.findOne({
-      partcipants: { $all: [sender, receiver] },
+      participants: { $all: [sender, receiver] },
     }).populate("messages");
 
     return res.status(200).json(conversation?.messages);
